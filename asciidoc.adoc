@@ -1,0 +1,99 @@
+= Getting productive with AsciiDoc 
+Bjoern Steffens
+:doctype: book
+:revnumber: 1.2
+:revdate: 12.03.2023
+:revremark: First published version.
+:icons: font
+:sectnums:
+:sectnumlevels: 6
+:toc: left
+:toclevels: 2
+:imagesdir: ./images
+//:stylesheet: themes.css
+//:stylesdir: ./styles 
+
+// =============================================
+// =============================================
+== What is AsciiDoc
+AsciiDoc can more than Markdown and lends itself to write better technical documentation and collaboration faster across tools like Github. The syntax is more comprehensive vs Markdown but investing in the learning  curve pays off swiftly as soon as your documentation gets more complex and intertwined.
+
+AsciiDoc is OpenSource but has been around since many years and is getting good traction. There are standardization and communities working the tool contagiously hence it is something worthwhile to look into.
+
+NOTE: See the https://github.com/bjoernsteffens/asciidoc_public/blob/main/asciddoc_sample_formatting.adoc[asciidoc_sample_formatting.adoc] file in the root directoryfor a comprehensive set of syntax examples. Load it up in Visual Studio Code and get familiar with the syntax and you will see how it looks like immediate with the preview extension. This was how I quickly learned the syntax and features.
+
+== How do you edit and preview asciidoc files?
+There are extension to a few IDEs and I would recommend Visual Studio Code, where you can edit and live-preview the content. This is the only extension where both the raw adoc file and the preview scrolls in synch with almost perfect alignment.
+
+.AsciiDoc plugin for visual studio code
+image::asciidoc_plugin.png[]
+
+.Visual studio code with asciidoc preview extension
+image::vstcode_asciidoc.png[]
+
+See AsciiDoc toolchain below how to convert an adoc file into other various formats. Follow the links below for a useful set of pointers getting started with AsciiDoc
+
+- https://asciidoc.org/[AsciiDoc]
+- https://asciidoctor.org/[Asciidoctor]
+- https://docs.asciidoctor.org/asciidoctor/latest/[Documentation]
+- https://kate-editor.org/syntax/data/html/asciidoc.adoc.html[Comprehensive Cheat-Sheet and Sample file]
+
+== What is the asciidoc toolchain?
+Editing an asciidoc (adoc) file in Visual Studio Code, you need to transform the file into something consumable. You can however preview the file while editing it so that you have a good understanding of the actual output.
+
+.AsciiDoc high level process  overview
+image::asciidoc_process.png[]
+
+TIP: The adoc file is rendered by Github so you can point to it and share the link and it can be consumed without having to install an IDE. Just like the file you are reading now.
+
+.The most popular formats are:
+- html
+- pdf
+- epub
+
+You will need to install the command line toolchain and use a very few but easy command to transform the adoc file into one or more of the mentioned formats above.
+
+.Before you install asciidoctor you need to install and activate xcode on your mac.
+[source, terminal]
+----
+
+sudo xcode-select --install
+sudo xcode-select -r
+sudo xcodebuild -license
+
+----
+
+== Toolchain installation hints
+
+- https://docs.asciidoctor.org/asciidoctor/latest/install/macos/[Getting the toolchain installed]
+
+== Installing the pdf and epub converters
+This will allow you to create .epub and .pdf files from the .adoc input file. See the examples below how to convert to those formats.
+
+NOTE: If you get an error message installing the gems below for ruby and css, following the instructions provided with the error message and upgrade Ruby and the css dependencies
+
+NOTE: Images are by default not displayed in the Apple iBook application. However if you tap or click on the placeholders with a question mark, the images are displayed. Other Ebook readers do not demonstrate this kind of behavior and display images without any additional action.
+
+[source,terminal]
+----
+
+sudo gem install asciidoctor-pdf
+sudo gem install asciidoctor-epub3
+ 
+----
+
+== Example Shell Commands to convert the file
+[source,terminal]
+----
+# Change to the folder where your adoc file is stored.
+# The last line creates the you_file.html file if
+# you need that. The index.html will be for a 
+# publishing to a webserver like Github pages
+
+#!/bin/sh
+asciidoctor -o index.html your_file.adoc &&
+asciidoctor-pdf your_file.adoc  && 
+asciidoctor-epub3 your_file.adoc &&
+asciidoctor your_file.adoc
+
+----
